@@ -14,7 +14,9 @@ Cordova 支付宝支付插件
 
 ## 自动安装（Cordova > v5.1.1）
 
-	cordova plugin add https://github.com/charleyw/cordova-plugin-alipay.git --variable PARTNER_ID=[你的商户PID可以在账户中查询] 
+	cordova plugin add https://github.com/charleyw/cordova-plugin-alipay.git --variable IOS_URL_SCHEME=[你的ios app的url scheme] 
+
+这个url scheme主要用来从支付宝那里跳回当前app，该名字应该尽可能唯一标识您的app
 
 ## 使用方法
 ```
@@ -56,21 +58,9 @@ window.alipay.pay( { order : "构建的订单参数串" },
 
 		git clone https://github.com/charleyw/cordova-plugin-alipay.git && cd cordova-plugin-alipay && export CORDOVA_PLUGIN_DIR=$(pwd)
 		
-2. 修改$CORDOVA_PLUGIN_DIR/plugin.xml，删除下面这一行：
+2. 安装
 
-		<preference name="PARTNER_ID"/>
-		
-2. 修改$CORDOVA_PLUGIN_DIR/plugin.xml，将
-
-        <preference name="partner" value="$PARTNER_ID" />
-改成
-
-        <preference name="partner" value="<你的partner的id>" />
-
-	**注意**：总共有两处
-3. 安装
-
-		cordova plugin add $CORDOVA_PLUGIN_DIR 
+		cordova plugin add $CORDOVA_PLUGIN_DIR --variable IOS_URL_SCHEME="scheme name"
 
 
 ## Liscense

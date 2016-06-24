@@ -19,7 +19,7 @@ public class AliPayPlugin extends CordovaPlugin {
     private static String TAG = "AliPayPlugin";
 
     //商户PID
-    private String partner = "";
+    //private String partner = "";
     //商户收款账号
     //private String seller = "";
     //商户私钥，pkcs8格式
@@ -28,7 +28,7 @@ public class AliPayPlugin extends CordovaPlugin {
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        partner = webView.getPreferences().getString("partner", "");
+        //partner = webView.getPreferences().getString("partner", "");
         //seller = webView.getPreferences().getString("seller", "");
         //privateKey = webView.getPreferences().getString("privatekey", "");
     }

@@ -15,7 +15,7 @@
     <engine name="cordova" version=">=3.4.0"/>
   </engines>
 
-  <preference name="PARTNER_ID"/>
+  <preference name="IOS_URL_SCHEME"/>
 
   <asset src="www/alipay.js" target="js/alipay.js"/>
 
@@ -25,7 +25,6 @@
 
   <platform name="android">
     <config-file target="res/xml/config.xml" parent="/*">
-      <preference name="partner" value="$PARTNER_ID" />
       <feature name="AliPay">
         <param name="android-package" value="wang.imchao.plugin.alipay.AliPayPlugin"/>
         <param name="onload" value="true" />
@@ -58,7 +57,7 @@
 
   <platform name="ios">
     <config-file target="config.xml" parent="/widget">
-      <preference name="partner" value="$PARTNER_ID" />
+      <preference name="url_scheme" value="$IOS_URL_SCHEME" />
       <feature name="AliPay">
         <param name="ios-package" value="AlipayPlugin" />
         <param name="onload" value="true" />
@@ -72,7 +71,7 @@
               <string>alipay</string>
               <key>CFBundleURLSchemes</key>
               <array>
-                  <string>a$PARTNER_ID</string>
+                  <string>$IOS_URL_SCHEME</string>
               </array>
           </dict>
       </array>

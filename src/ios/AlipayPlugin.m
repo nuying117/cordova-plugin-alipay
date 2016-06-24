@@ -5,7 +5,7 @@
 
 -(void)pluginInitialize{
     CDVViewController *viewController = (CDVViewController *)self.viewController;
-    self.partner = [viewController.settings objectForKey:@"partner"];
+    self.urlScheme = [viewController.settings objectForKey:@"url_scheme"];
 }
 
 - (void) pay:(CDVInvokedUrlCommand*)command
@@ -17,11 +17,10 @@
      *签约后，支付宝会为每个商户分配一个唯一的 parnter 和 seller。
      */
 
-    //partner获取失败,提示
-    if ([self.partner length] == 0)
+    if ([self.urlScheme length] == 0)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
-                                                        message:@"缺少partner配置信息。"
+                                                        message:@"缺少url scheme配置信息。"
                                                        delegate:self
                                               cancelButtonTitle:@"确定"
                                               otherButtonTitles:nil];
@@ -35,7 +34,7 @@
     //NSLog(@"orderString = %@", orderString);
 
     [[AlipaySDK defaultService] payOrder: orderString 
-                              fromScheme: [NSString stringWithFormat:@"a%@", self.partner] 
+                              fromScheme: self.urlScheme 
                                 callback: ^(NSDictionary *resultDic) {
                                               if ([[resultDic objectForKey:@"resultStatus"]  isEqual: @"9000"]) {
                                                   [self successWithCallbackID:self.currentCallbackId messageAsDictionary:resultDic];
@@ -52,7 +51,7 @@
 {
     NSURL* url = [notification object];
     
-    if ([url isKindOfClass:[NSURL class]] && [url.scheme isEqualToString:[NSString stringWithFormat:@"a%@", self.partner]])
+    if ([url isKindOfClass:[NSURL class]] && [url.scheme isEqualToString:self.urlScheme])
     {
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
             if ([[resultDic objectForKey:@"resultStatus"]  isEqual: @"9000"]) {
