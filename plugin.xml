@@ -16,8 +16,6 @@
   </engines>
 
   <preference name="PARTNER_ID"/>
-  <preference name="SELLER_ACCOUNT"/>
-  <preference name="PRIVATE_KEY"/>
 
   <asset src="www/alipay.js" target="js/alipay.js"/>
 
@@ -28,8 +26,6 @@
   <platform name="android">
     <config-file target="res/xml/config.xml" parent="/*">
       <preference name="partner" value="$PARTNER_ID" />
-      <preference name="seller" value="$SELLER_ACCOUNT" />
-      <preference name="privatekey" value="$PRIVATE_KEY" />
       <feature name="AliPay">
         <param name="android-package" value="wang.imchao.plugin.alipay.AliPayPlugin"/>
         <param name="onload" value="true" />
@@ -58,15 +54,11 @@
 
     <source-file src="src/android/AliPayPlugin.java" target-dir="src/wang/imchao/plugin/alipay"/>
     <source-file src="src/android/PayResult.java" target-dir="src/wang/imchao/plugin/alipay"/>
-    <source-file src="src/android/Base64.java" target-dir="src/wang/imchao/plugin/alipay"/>
-    <source-file src="src/android/SignUtils.java" target-dir="src/wang/imchao/plugin/alipay"/>
   </platform>
 
   <platform name="ios">
     <config-file target="config.xml" parent="/widget">
       <preference name="partner" value="$PARTNER_ID" />
-      <preference name="seller" value="$SELLER_ACCOUNT" />
-      <preference name="privatekey" value="$PRIVATE_KEY" />
       <feature name="AliPay">
         <param name="ios-package" value="AlipayPlugin" />
         <param name="onload" value="true" />
@@ -96,18 +88,6 @@
     <header-file src="src/ios/AlipayPlugin.h"/>
     <source-file src="src/ios/AlipayPlugin.m"/>
 
-    <header-file src="src/ios/Order.h"/>
-    <source-file src="src/ios/Order.m"/>
-
-    <header-file src="src/ios/Util/DataSigner.h"/>
-    <header-file src="src/ios/Util/NSDataEx.h"/>
-    <header-file src="src/ios/Util/RSADataSigner.h"/>
-    <header-file src="src/ios/Util/openssl_wrapper.h"/>
-
-    <source-file src="src/ios/Util/DataSigner.m"/>
-    <source-file src="src/ios/Util/NSDataEx.m"/>
-    <source-file src="src/ios/Util/RSADataSigner.m"/>
-    <source-file src="src/ios/Util/openssl_wrapper.m"/>
-
   </platform>
 </plugin>
+

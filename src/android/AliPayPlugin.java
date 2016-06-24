@@ -21,28 +21,29 @@ public class AliPayPlugin extends CordovaPlugin {
     //商户PID
     private String partner = "";
     //商户收款账号
-    private String seller = "";
+    //private String seller = "";
     //商户私钥，pkcs8格式
-    private String privateKey = "";
+    //private String privateKey = "";
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         partner = webView.getPreferences().getString("partner", "");
-        seller = webView.getPreferences().getString("seller", "");
-        privateKey = webView.getPreferences().getString("privatekey", "");
+        //seller = webView.getPreferences().getString("seller", "");
+        //privateKey = webView.getPreferences().getString("privatekey", "");
     }
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
         try {
             JSONObject arguments = args.getJSONObject(0);
-            String tradeNo = arguments.getString("tradeNo");
-            String subject = arguments.getString("subject");
-            String body = arguments.getString("body");
-            String price = arguments.getString("price");
-            String notifyUrl = arguments.getString("notifyUrl");
-            this.pay(tradeNo, subject, body, price, notifyUrl, callbackContext);
+            //String tradeNo = arguments.getString("tradeNo");
+            //String subject = arguments.getString("subject");
+            //String body = arguments.getString("body");
+            //String price = arguments.getString("price");
+            //String notifyUrl = arguments.getString("notifyUrl");
+            String orderString = arguments.getString("order");
+            this.pay(orderString, callbackContext);
         } catch (JSONException e) {
             callbackContext.error(new JSONObject());
             e.printStackTrace();
@@ -51,10 +52,11 @@ public class AliPayPlugin extends CordovaPlugin {
         return true;
     }
 
-    public void pay(String tradeNo, String subject, String body, String price, String notifyUrl, final CallbackContext callbackContext) {
+    public void pay(String payInfo, final CallbackContext callbackContext) {
         // 订单
-        String orderInfo = createRequestParameters(subject, body, price, tradeNo, notifyUrl);
+        //String orderInfo = createRequestParameters(subject, body, price, tradeNo, notifyUrl);
 
+        /*
         // 对订单做RSA 签名
         String sign = sign(orderInfo);
         try {
@@ -63,17 +65,15 @@ public class AliPayPlugin extends CordovaPlugin {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
+        
         // 完整的符合支付宝参数规范的订单信息
         final String payInfo = orderInfo + "&sign=\"" + sign + "\"&"
                 + getSignType();
-
+        */
         cordova.getThreadPool().execute(new Runnable() {
             @Override
             public void run() {
-                // 构造PayTask 对象
                 PayTask alipay = new PayTask(cordova.getActivity());
-                // 调用支付接口，获取支付结果
                 String result = alipay.pay(payInfo);
                 PayResult payResult = new PayResult(result);
                 if (TextUtils.equals(payResult.getResultStatus(), "9000")) {
@@ -94,6 +94,7 @@ public class AliPayPlugin extends CordovaPlugin {
     /**
      * create the order info. 创建订单信息
      */
+    /*
     public String createRequestParameters(String subject, String body, String price, String tradeNo, String notifyUrl) {
         // 签约合作者身份ID
         String orderInfo = "partner=" + "\"" + partner + "\"";
@@ -144,21 +145,24 @@ public class AliPayPlugin extends CordovaPlugin {
 
         return orderInfo;
     }
-
+    */
     /**
      * sign the order info. 对订单信息进行签名
      *
      * @param content 待签名订单信息
      */
+    /*
     public String sign(String content) {
         return SignUtils.sign(content, privateKey);
     }
-
+    */
     /**
      * get the sign type we use. 获取签名方式
      */
+    /*
     public String getSignType() {
         return "sign_type=\"RSA\"";
     }
-
+    */
 }
+

@@ -14,26 +14,17 @@ Cordova 支付宝支付插件
 
 ## 自动安装（Cordova > v5.1.1）
 
-	cordova plugin add https://github.com/charleyw/cordova-plugin-alipay.git --variable PARTNER_ID=[你的商户PID可以在账户中查询] --variable SELLER_ACCOUNT=[你的商户支付宝帐号] --variable PRIVATE_KEY=[你生成的private key]
-
-**注意**：PRIVATE_KEY的值是生成的私钥的**内容**，要求是**PKCS**格式，需要去掉——-BEGIN PRIVAT KEY——-和——-END PRIVATE KEY——-，以及**空格**和**换行**。关于私钥的说明详见下面<a href='#关于私钥'>关于私钥</a>部分
+	cordova plugin add https://github.com/charleyw/cordova-plugin-alipay.git --variable PARTNER_ID=[你的商户PID可以在账户中查询] 
 
 ## 使用方法
 ```
-window.alipay.pay({
-    tradeNo: new Date().getTime(),
-    subject: "测试标题",
-    body: "我是测试内容",
-    price: 0.02,
-    notifyUrl: "http://your.server.notify.url"
-}, function(successResults){alert(successResults)}, function(errorResults){alert(errorResults)});
+window.alipay.pay( { order : "构建的订单参数串" }, 
+                   function(successResults){alert(successResults)}, 
+                   function(errorResults){alert(errorResults)} );
 ```
 ### 参数说明
 
-* tradeNo 这个是支付宝需要的商家支付单号，应该是一个自己生成唯一的ID号
-* subject 这个字段会显示在支付宝付款的页面
-* body 订单详情，没找到会显示哪里
-* price 价格，支持两位小数
+* order 这个是根据支付宝文档(https://doc.open.alipay.com/doc2/detail?treeId=59&articleId=103927&docType=1)生成的参数串, 包含sign和sign_type, 本插件会将该串传给支付宝sdk
 * function(successResults){} 是成功之后的回调函数
 * function(errorResults){} 是失败之后的回调函数
 
@@ -60,12 +51,6 @@ window.alipay.pay({
 * memo：一般是一些纯中文的解释，出错的时候会有内容。
 * result: 是所有支付请求参数的拼接起来的字符串。
 
-### 关于私钥
-这里用的私钥一定是**PKCS**格式的，详细生成步骤请参照官方文档：[RSA私钥及公钥生成](https://doc.open.alipay.com/doc2/detail.htm?spm=0.0.0.0.WSkmo8&treeId=58&articleId=103242&docType=1)  
-
-文档中描述的这一步：`OpenSSL> pkcs8 -topk8 -inform PEM -in rsa_private_key.pem -outform PEM -nocrypt`会将生成的私钥**打印到屏幕上**，记得复制下来。
-
-
 ## 手动安装
 1. 使用git命令将插件下载到本地，并标记为$CORDOVA_PLUGIN_DIR
 
@@ -73,21 +58,21 @@ window.alipay.pay({
 		
 2. 修改$CORDOVA_PLUGIN_DIR/plugin.xml，删除下面这一行：
 
-		<preference name="PRIVATE_KEY"/>
+		<preference name="PARTNER_ID"/>
 		
 2. 修改$CORDOVA_PLUGIN_DIR/plugin.xml，将
 
-		<preference name="privatekey" value="$PRIVATE_KEY" />
+        <preference name="partner" value="$PARTNER_ID" />
 改成
 
-		<preference name="privatekey" value="你生成的private key的内容"/>
+        <preference name="partner" value="<你的partner的id>" />
 
 	**注意**：总共有两处
 3. 安装
 
-		cordova plugin add $CORDOVA_PLUGIN_DIR --variable PARTNER_ID=[你的商户PID可以在账户中查询] --variable SELLER_ACCOUNT=[你的商户支付宝帐号]
+		cordova plugin add $CORDOVA_PLUGIN_DIR 
 
 
 ## Liscense
 
-© 2015 Wang Chao. This code is distributed under the MIT license.
+© 2015 Wang Chao, last changed by Wang Peng. This code is distributed under the MIT license.
