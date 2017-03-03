@@ -43,7 +43,7 @@ public class AliPayPlugin extends CordovaPlugin {
             @Override
             public void run() {
                 PayTask alipay = new PayTask(cordova.getActivity());
-                String result = alipay.pay(payString);
+                String result = alipay.pay(payString, true);
                 PayResult payResult = new PayResult(result);
                 if (TextUtils.equals(payResult.getResultStatus(), "9000")) {
                     callbackContext.success(payResult.toJson());

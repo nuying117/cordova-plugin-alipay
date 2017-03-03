@@ -49,7 +49,7 @@
       <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     </config-file>
 
-    <source-file src="src/android/libs/alipaySDK-20150724.jar" target-dir="libs"/>
+    <source-file src="src/android/libs/alipaySdk-20160825.jar" target-dir="libs"/>
 
     <source-file src="src/android/AliPayPlugin.java" target-dir="src/wang/imchao/plugin/alipay"/>
     <source-file src="src/android/PayResult.java" target-dir="src/wang/imchao/plugin/alipay"/>
